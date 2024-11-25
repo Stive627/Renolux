@@ -1,0 +1,16 @@
+const express = require('express')
+require('dotenv').config()
+const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+const {routerAdmin, routerMedia, routerComment} = require('./Routes/RenoRoutes')
+
+const app = express()
+const port = process.env.PORT
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:true}))
+app.use('/admin', routerAdmin)
+app.use('/media', routerMedia)
+app.use('/comment', routerComment)
+app.use('/', express.static("public"))
+mongoose.connect(process.env.URI, {'dbName':'RenoluxDB'}).then(()=>console.log('Connected to the database')).catch((error) =>console.log('An error occured', error)) 
+app.listen(port, ()=>{console.log(`The server is running at http://localhost:${port}`)})
