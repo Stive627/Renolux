@@ -1,3 +1,22 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .scrollVertical{
+        animation: verticalAnimation 7s linear infinite;
+        padding-bottom: 100%;
+    }
+    @keyframes verticalAnimation {
+        0% {transform: translate(0,0);}
+        100% {transform: translate((0%, 100%));}
+    }
+    .scrollHorrizontal{
+        animation: horizontalAnimation 7s linear infinite;
+        padding-left: 100%;
+    }
+    @keyframes horizontalAnimation {
+        0% {transform: translate(0, 0);}
+        100% {transform: translate(100%, 0);}
+    }
+}

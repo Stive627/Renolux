@@ -48,8 +48,7 @@ routerComment.delete('/delete/:id', authRoute, deleteComment )
 routerMedia.get('/display', displayComment)
 
 routerPlaco.post('/generate', authRoute)
-
-routerPeinture.post('/generate', authRoute, )
+routerPeinture.post('/generate', authRoute)
 
 module.exports = {routerAdmin, routerMedia, routerComment, routerPlaco}
 

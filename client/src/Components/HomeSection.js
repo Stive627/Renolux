@@ -18,8 +18,10 @@ const Plans = () => {
     }, [])
     const PlanContainer = () =>{
         return(
-            <div className=' w-max h-max border border-gray-200 p-2 rounded-sm flex flex-col gap-1 overflow-hidden'>
-                {plans}
+            <div className=' w-max h-max border border-gray-200 p-2 rounded-sm flex flex-col gap-1 overflow-hidden scrollVertical'>
+                <div className=' w-full h-full flex flex-col gap-1 scrollVertical '>
+                    {plans}
+                </div>             
             </div>
         )
     }

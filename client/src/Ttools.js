@@ -7,6 +7,8 @@ export function Timg({url, className, alt }){
     )
 }
 
+export const Tdelay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
 export function Rbutton({handleClick, value, className}){
     return(
         <button className={className} onClick={handleClick}>{value}</button>

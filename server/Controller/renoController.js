@@ -3,8 +3,9 @@ const tmail = require('../tools/tmail')
 const bcrypt = require('bcrypt')
 const {AdminModel, MediaModel, CommentModel, ImgdeoModel} = require('../db/RenoModel')
 const jwt = require('jsonwebtoken')
+const fs = require('node:fs')
 
-const   Register = async(req, res) =>{
+const Register = async(req, res) =>{
     const {username, email, password} = req.body
     if(!username || !email || !password){
         res.send('The field(s) are missing.')
@@ -97,8 +98,14 @@ const updateMedia = async(req, res) => {
 }
 
 const deleteMedia = async(req, res) => { 
-    await MediaModel.deleteOne({_id:req.params.id})
-    .then(() => res.send('The value is deleted'))
+    const media =  await MediaModel.findOneAndDelete({_id:req.params.id})
+    .then(() => {
+        fs.rm(media.path, (err) => {
+            if(err) return res.send(err)
+            res.send('The media is deleted')
+        })
+        
+    })
     .catch((error) =>res.send(`An error occured, ${error}`))
 }
 
