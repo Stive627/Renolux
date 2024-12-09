@@ -9,6 +9,7 @@ export function Timg({url, className, alt }){
 
 export const Tdelay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
+
 export function Rbutton({handleClick, value, className}){
     return(
         <button className={className} onClick={handleClick}>{value}</button>
@@ -121,3 +122,7 @@ export const CarouselShow = ({arr}) => {
     
 
 }
+
+export const checkValidForm = (condition) => condition ? 'bg-blue-500 text-white border border-blue-700' : 'bg-gray-500 text-black border border-gray-700'
+
+export const Tspinner = ({className, content}) => <p className={`${className} animate-spin`}>{content} {' '}</p>

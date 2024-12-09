@@ -20,3 +20,16 @@
         100% {transform: translate(100%, 0);}
     }
 }
+
+.com{
+    animation: comment 18s infinite;
+    padding-right: 100%;
+}
+@keyframes comment {
+    0%{
+        transform: translate(0, 0);
+    }
+    100%{
+        transform: translate(0, 100%);
+    }
+}

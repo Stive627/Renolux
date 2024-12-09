@@ -6,7 +6,8 @@ const AdminSchema = new Schema({
     email:{type:String, required:true},
     password: {type:String, required:true},
     medias:[{type:Schema.Types.ObjectId, ref:'Media'}]
-}, {timestamps:true})
+}, 
+{timestamps:true})
 
 const MediaSchema = new Schema({
     owner:{type : Schema.Types.ObjectId, ref:'Admin',  required:true},
@@ -15,7 +16,7 @@ const MediaSchema = new Schema({
 }, {timestamps:true})
 
 const ImgdeoSchema = new Schema({
-    media: [{type:Schema.Types.ObjectId, ref:'Media'}],
+    media: {type:Schema.Types.ObjectId, ref:'Media'},
     size: Number,
     filename: String,
     url:String
@@ -23,38 +24,54 @@ const ImgdeoSchema = new Schema({
 
 const commentSchema = new Schema({
     firstname:{type:String, required:true},
+    email:{type:String, required:true},
     message:{type:String, required:true},
     stars:{type:Number, required:true}
 },{timestamps:true})
 
 const PlacoSchema = new Schema({
-    titre:{type: String, required:true},
-    plaque_de_placo: Number,
-    chevilles: Number,
-    fourrures: Number,
-    cornieres: Number,
-    enduit_de_lissage: Number,
-    enduit_colle: Number,
-    bande_a_joint: Number,
-    bande_armee: Number,
-    vice_placo: Number,
-    surface: Number,
-    price: Number
+    title:{type: String, required:true},
+    price: {type:Number, required:true},
+    surface: {type:Number, required:true},
+    vice_placo_qte:{type:Number, required:true},
+    vice_placo_prix: {type:Number, required:true},
+    bande_armee_qte: {type:Number, required:true},
+    bande_armee_prix:{type:Number, required:true},
+    bande_joint_qte: {type:Number, required:true},
+    bande_joint_prix:{type:Number, required:true},
+    enduit_colle_qte:{type:Number, required:true},
+    enduit_colle_prix: {type:Number, required:true},
+    enduit_lissage_qte: {type:Number, required:true},
+    enduit_lissage_prix:{type:Number, required:true},
+    corniere_qte: {type:Number, required:true},
+    corniere_prix:{type:Number, required:true},
+    plaque_placo_qte: {type:Number, required:true},
+    plaque_placo_prix: {type:Number, required:true},
+    cheville_qte: {type:Number, required:true},
+    cheville_prix:{type:Number, required:true},
+    fourrure_qte: {type:Number, required:true},
+    fourrure_prix:{type:Number, required:true},
+
 },{timestamps:true})
 
 const PeintureSchema = new Schema({
-    titre:{type: String, required:true},
-    sceau_peinture: Number,
-    pot_enduit: Number,
-    sacs_ciments: Number,
-    pot_impression: Number,
-    surface: Number,
-    price: Number,
+    title:{type: String, required:true},
+    surface: {type:Number, required:true},
+    price: {type:Number, required:true},
+    sceau_peinture_qte: {type:Number, required:true},
+    sceau_peinture_prix: {type:Number, required:true},
+    pots_enduit_qte: {type:Number, required:true},
+    pots_enduit_prix: {type:Number, required:true},
+    sac_ciment_qte: {type:Number, required:true},
+    sac_ciment_prix: {type:Number, required:true},
+    pots_impression_qte: {type:Number, required:true},
+    pots_impression_prix: {type:Number, required:true},
 },{timestamps:true})
-const AdminModel = mongoose.model('dmin', AdminSchema)
+
+const AdminModel = mongoose.model('Admin', AdminSchema)
 const MediaModel = mongoose.model('Media', MediaSchema)
 const CommentModel = mongoose.model('Comment', commentSchema)
 const ImgdeoModel = mongoose.model('Imgdeo', ImgdeoSchema)
-const PlacoModel = mongoose.model('placo', PlacoSchema)
-const PeintureModel = mongoose.model('peinture', PeintureSchema)
-module.exports = {AdminModel, MediaModel, CommentModel, ImgdeoModel, PlacoModel, pei}
+const PlacoModel = mongoose.model('Placo', PlacoSchema)
+const PeintureModel = mongoose.model('Peinture', PeintureSchema)
+module.exports = {AdminModel, MediaModel, CommentModel, ImgdeoModel, PlacoModel, PeintureModel}

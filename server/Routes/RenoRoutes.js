@@ -1,5 +1,5 @@
 const express = require('express')
-const { Register, login, addMedia, updateMedia, deleteMedia, passwordRecovery, passwordChange, addComment, displayComment, showMedia, deleteComment } = require('../Controller/renoController')
+const { Register, login, addMedia, updateMedia, deleteMedia, passwordRecovery, passwordChange, addComment, displayComment, showMedia, deleteComment, placoDevis, peintureDevis } = require('../Controller/renoController')
 const multer = require('multer')
 const routerAdmin = express.Router()
 const routerMedia = express.Router()
@@ -7,33 +7,34 @@ const routerComment = express.Router()
 const routerPlaco = express.Router()
 const routerPeinture = express.Router()
 const jwt = require('jsonwebtoken')
+require('dotenv').config()
 
 const storage = multer.diskStorage({
     destination:function(req, file, cb){
-        cb(null, '../public/medias')
+        cb(null, 'public/medias/')
     },
     filename: function(req, file, cb){
         cb(null, file.originalname)
-    }  
+    } 
 })
 
 const authRoute = (req, res, next) =>{
-    const token = req.authorization.token
-    if(!token) return res.send("you have to provide a token.")
-
-    try{ 
-    const decoded = jwt.verify(token, process.env.SECRET_KEY)
-    req.user = decoded
+    const token = req.headers['authorization']
+    if(!token) return res.status(401).send("you have to provide a token.")
+    const payload = process.env.SECRET_KEY
+    jwt.verify(token,payload, (err, user)=>{
+    if(err){
+        res.status(403).send(err)
+        return;
+    }
+    req.user = user
     next()
-    }
-    catch(error){
-        res.send(`invalid token. ${error}`)
-    }
+    })
 }
 
 const upload = multer({storage:storage})
-
-routerAdmin.post('/register', upload.single('media'), Register)
+ 
+routerAdmin.post('/register', Register)
 routerAdmin.post('/login', login)
 routerAdmin.post('/passwordRecovery',passwordRecovery)
 routerAdmin.post('/passwordChange', passwordChange)
@@ -45,10 +46,9 @@ routerMedia.get('/show',  showMedia)
 
 routerComment.post('/add', addComment)
 routerComment.delete('/delete/:id', authRoute, deleteComment )
-routerMedia.get('/display', displayComment)
+routerComment.get('/show', displayComment)
 
-routerPlaco.post('/generate', authRoute)
-routerPeinture.post('/generate', authRoute)
+routerPlaco.post('/generate', authRoute, placoDevis)
+routerPeinture.post('/generate', authRoute, peintureDevis)
 
-module.exports = {routerAdmin, routerMedia, routerComment, routerPlaco}
-
+module.exports = {routerAdmin, routerMedia, routerComment, routerPlaco, routerPeinture}
