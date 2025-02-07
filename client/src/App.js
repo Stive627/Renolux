@@ -7,9 +7,10 @@ function App() {
     <Router>
       <Routes>
         <Route element={<ProtectedRoute/>}>
-        <Route path="/register"/>
-        <Route path="/login"/>
+        <Route path="/admin"/>
       </Route>
+      <Route path="/register"/>
+      <Route path="/login"/>
       <Route path="/" element={<Renolux/>}/>
       </Routes>
     </Router>
