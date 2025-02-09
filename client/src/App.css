@@ -33,3 +33,6 @@
         transform: translate(0, 100%);
     }
 }
+.lineargrad{
+    background-color: linear-gradient(to right, rgba(234, 213, 233, 1), rgba(59, 136, 219, 0.51),  rgba(245, 245, 245, 1));;
+}

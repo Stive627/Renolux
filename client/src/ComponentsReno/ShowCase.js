@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState } from 'react'
-import { checkValidForm, fetchLink, Tdelay, Timg, Tspinner } from '../Ttools'
+import { checkValidForm, fetchLink, Loader, Tdelay, Timg, Tspinner } from '../Ttools'
 import PreviewIcon from '@mui/icons-material/Preview';
 import SaveAltIcon from '@mui/icons-material/SaveAlt';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
@@ -9,6 +9,7 @@ import SettingsIcon from '@mui/icons-material/Settings';
 import PersonIcon from '@mui/icons-material/Person';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import '../../../client/src/App.css'
 
 const Label = ({services, currService, currSubService}) => {
 
@@ -18,8 +19,8 @@ const Label = ({services, currService, currSubService}) => {
 
         {
             services.map(
-                (elt) => 
-                <div className = {` w-full h-full ${currService(Object.keys(elt)[0]) ? 'border border-blue-500' : 'border border-gray-100 p-1'} `}>
+                (elt, indx) => 
+                <div key={indx} className = {` w-full h-full ${currService(Object.keys(elt)[0]) ? 'border border-blue-500' : 'border border-gray-100 p-1'} `}>
                     <button className={`${currService(Object.keys(elt)[0]) ? ' text-white bg-blue-600' : ' text-gray-800 bg-slate-50 text-lg'}`}>{Object.keys(elt)[0]}</button>
                         {
                             currService(Object.keys(elt)[0]) && 
@@ -103,12 +104,15 @@ const Gallery = () => {
         }
         anim()
     },[currentIndx])
-
+    
+    if(loader){
+        return <Loader/>
+    }
     return(
-        <div className=' row-span-4 grid grid-cols-5' >
-            <Label services={services} currSubService={(subService) => subService === med[currentIndx % med.length].subService} currService={(service) => service === med[currentIndx % med.length].service}/>
-            <Medias media={med}/>
-        </div>
+                <div className=' row-span-4 grid grid-cols-5' >
+                    <Label services={services} currSubService={(subService) => subService === med[currentIndx % med.length].subService} currService={(service) => service === med[currentIndx % med.length].service}/>
+                    <Medias media={med}/>
+                </div>
             )
 
 }
@@ -168,7 +172,7 @@ const DevisForm = () => {
         })}
     }
     return(
-        <form onSubmit={handleSubmit} className='text-gray-700 row-span-2 bg-gradient-to-r flex justify-center items-center' style={{backgroundImage:'linear-gradient(to right, rgba(234, 213, 233, 1), rgba(59, 136, 219, 0.51),  rgba(245, 245, 245, 1));'}}>
+        <form onSubmit={handleSubmit} className='text-gray-700 row-span-2 bg-gradient-to-r flex justify-center items-center lineargrad'>
            <div>
                 <div className = 'flex justify-between '>
                      <SelectS callback={nextInput}/>
@@ -188,15 +192,14 @@ const DevisForm = () => {
 const Stars = ({getStars}) =>{
     const [rank, setRank] = useState([0, 0, 0, 0, 0])
     const handleChange = (indx) => {
-        const newRank = rank.map((elt, index) =>{if(index > indx){return elt} else {return 1}})
+        const newRank = rank.map((elt, index) => index > indx ?  elt : 1)
         setRank(newRank)
         getStars(indx + 1)
     }
-
     return(
         <div className=' flex flex-row gap-2'>
             {
-                Array(5).fill(0).map((elt, indx) => <div onMouseOver={() =>handleChange(indx)} onClick={() =>handleChange(indx)}>{rank[indx] ? <StarOutlineIcon className=' text-yellow-500'/> : <StarOutlineIcon className=' text-gray-500'/>}</div>)
+                Array(5).fill(0).map((elt, indx) => <div key={indx} onMouseOver={() =>handleChange(indx)} onClick={() =>handleChange(indx)}>{rank[indx] ? <StarOutlineIcon className=' text-yellow-500'/> : <StarOutlineIcon className=' text-gray-500'/>}</div>)
             }
         </div>
     )
@@ -243,7 +246,7 @@ const FormComment = ({handleAddComment}) => {
         <form onSubmit={handleSubmit}  className=' w-full h-full flex justify-center gap-1 border border-gray-300'>
             <div className=' flex'> <AccountCircleIcon className=' to-gray-400'/><input className=' w-3/4' placeholder='Prenom' value={comment.username} onChange={(e)=>setComment(e.target.value)}/></div>
             <textarea rows={5} cols={33} placeholder='Votre message...'></textarea>
-            <Stars numberStars = {getStars}/>
+            <Stars getStars = {getStars}/>
             <button disabled={!validForm} type='submit' className={`float-right text-sm ${checkValidForm(validForm)}`}>{spinner && <Tspinner content={<SettingsIcon className=' text-gray-700'/>} className = {''}/>} Post</button>
         </form>
     )
@@ -271,7 +274,7 @@ const ButtonCom = ({condition, element, handleClick}) =>{
 
 const CommentList = ({comment}) => {
     const [indx, setIndx] = useState(2)
-    const total = comment.length
+    const total = comment?.length
     const comRef = useRef(new Map())
 
     const handleFoward = () => {
@@ -335,7 +338,7 @@ const CommmentR = () => {
 
     return(
         <div className=' row-span-4 grid-cols-5 '>
-            <FormComment/>
+            <FormComment handleAddComment={handleAddComment}/>
             <CommentList comment={comment}/>
         </div>
     )

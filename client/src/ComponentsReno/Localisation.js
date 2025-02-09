@@ -7,7 +7,7 @@ import {fetchLink} from '../Ttools'
 
 const LinkMedia = ({borderColor, icon, socialNetwork, url}) => {
     return(
-        <div onClick={()=>window.open(url, '_blank')} style={{border:'2px', borderColor:borderColor, }} className=' p-2 w-3/4 flex gap-2'>
+        <div onClick={()=>window.open(url, '_blank')} style={{border:'2px', borderColor:borderColor, }} className=' p-2 w-3/4 flex gap-2 cursor-pointer'>
             <button>{icon}</button>
             <div className=' flex items-center'>
                 <p>Nous suivre sur {socialNetwork}</p>
@@ -18,8 +18,8 @@ const LinkMedia = ({borderColor, icon, socialNetwork, url}) => {
 
 const LinkPhone = () =>{
     return(
-        <div style={{border:'2px', borderColor:'rgba(57, 55, 55, 1)' }} className=' p-2 w-3/4 flex gap-2'>
-            <button>{<LocalPhoneIcon/>}</button>
+        <div style={{border:'2px', borderColor:'rgba(57, 55, 55, 1)' }} className=' p-2 w-3/4 flex gap-2 cursor-pointer'>
+            <button><a href='tel:+237691098037'>{<LocalPhoneIcon/>}</a></button>
             <div className=' flex items-center'>
                 <p>Nous Joindre par telephone</p>
             </div>
@@ -31,10 +31,10 @@ const SocialMedia = () =>{
     const col = ['rgba(75, 77, 199, 1)', 'rgba(108, 83, 157, 1)', 'rgba(158, 121, 121, 1)']
     const socialN = ['Facebook', 'Instagram', 'Youtube']
     const link =['https://www.facebook.com/profile.php?id=100084170042632&mibextid=ZbWKwL', 'https://www.instagram.com/renolux_cameroun?igsh=d2FrZjJmZG1yNTd6', '']
-    const socialLink = [<FacebookIcon/>,<InstagramIcon/>, <YouTubeIcon/>].map((elt, indx) => <LinkMedia icon={elt} borderColor={col[indx]} url={link[indx]} socialNetwork={socialN[indx]}/>)
-    const socialLinks = [...socialLink, <LinkPhone/>]
+    const socialLink = [<FacebookIcon/>,<InstagramIcon/>, <YouTubeIcon/>].map((elt, indx) => <div key={indx}><LinkMedia icon={elt}  borderColor={col[indx]} url={link[indx]} socialNetwork={socialN[indx]}/></div>)
+    const socialLinks = [...socialLink, <LinkPhone key={8}/>]
     return(
-        <div className=' col-span-4 flex flex-col gap-1'>
+        <div className=' col-span-4 flex flex-col gap-1 '>
             {socialLinks}
         </div>
     )

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Rbutton, Rimg, Rurl } from '../Ttools'
+import { fetchLink, Rbutton, Timg } from '../Ttools'
 import MenuIcon from '@mui/icons-material/Menu';
 
 const scroll = (id) => {
@@ -17,14 +17,14 @@ export const  link = [{title:'Catalogue', link:'#catalogue'}, {title:'Obtenir un
 export function LeftNav(){
     return(
         <div className='flex flex-row items-center gap-2'>
-            <Rimg alt={'Logo Renolux'} url={Rurl('logo')} className={'w-7 h-7'}/>
+            <Timg alt={'Logo Renolux'} url={fetchLink('logo')} className={'w-7 h-7'}/>
             <p style={{color:'rgba(57, 55, 55, 1)'}} className=' font-semibold  text-lg'>Renolux Cameroun</p>
         </div>
     )
 }
 
 function RightNav({className}){
-    const links = link.map((elt) =><a href={elt.link} onClick={scroll(elt.link.slice(1))} style={{color:'rgba(57, 55, 55, 1)'}} className = 'text-sm no-underline'>{elt.title}</a>)
+    const links = link.map((elt, indx) =><a key={indx} href={elt.link} onClick={scroll(elt.link.slice(1))} style={{color:'rgba(57, 55, 55, 1)'}} className = 'text-sm no-underline'>{elt.title}</a>)
     return(
         <div className={className}>
             {links}
@@ -46,7 +46,7 @@ function NavSmallScreen({handleClose}){
         handleClose()
         scroll(scrollTo)
     }
-    const links = link.map((elt) =><a href={elt.link} onClick={handleOnclick(elt.link.slice(1))} style={{color:'rgba(57, 55, 55, 1)'}} key={elt.title} className = 'text-lg no-underline to-gray-800'>{elt.title}</a>)
+    const links = link.map((elt) =><a  href={elt.link} onClick={handleOnclick(elt.link.slice(1))} style={{color:'rgba(57, 55, 55, 1)'}} key={elt.title} className = 'text-lg no-underline to-gray-800'>{elt.title}</a>)
     return(
         <div className =' w-screen h-screen bg-white justify-center pt-5'>
             <RightNav />

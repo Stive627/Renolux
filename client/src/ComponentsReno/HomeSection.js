@@ -10,7 +10,7 @@ const Plans = () => {
         })
         .then((value)=> value.json())
         .then((value)=>{
-            const items = value.map((elt,indx) => <Timg url={elt} className={' w-full h-full rounded-sm'} alt={`plan de placo n0${indx}`}/>)
+            const items = value.map((elt,indx) => <Timg key={indx} url={elt} className={' w-full h-full rounded-sm'} alt={`plan de placo n0${indx}`}/>)
             setPlans(items); 
             console.log(value); 
             setPreload(false)})

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
 
 
 export function Timg({url, className, alt }){
@@ -113,15 +113,7 @@ export const Loader = ({sizeContainer, sizeSpin}) =>{
 export const fetchLink = (suffix) => 'http://localhost:3000/' + suffix 
 
 
-export const CarouselShow = ({arr}) => {
-    // arr = [{alt:'', url:''}]
-    const size = arr.length
-    const ref = [{first:useRef(null), second:useRef(null), third:useRef(null)}]
-    const carrArr = [...arr].map((elt) => <img alt={elt.alt} src={elt.url}/>)
-    const re = useRef(null)
-    
 
-}
 
 export const checkValidForm = (condition) => condition ? 'bg-blue-500 text-white border border-blue-700' : 'bg-gray-500 text-black border border-gray-700'
 

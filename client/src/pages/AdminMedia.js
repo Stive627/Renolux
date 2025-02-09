@@ -42,7 +42,7 @@ const FileUI = ({file, handleRemove, handleCancel, handleAdd}) =>{
         <OverlayUI>
                     {file.map((elt, index) => {
                         return(
-                            <>
+                            <div key={index}>
                             <div className=' w-7 h-7 relative' key={index}>
                                 <div className=' w-full h-6'><img alt={`file${index}`} src={URL.createObjectURL(elt)} className=' object-cover'/></div>
                                 <div className=' absolute top-1 right-1'>
@@ -53,7 +53,7 @@ const FileUI = ({file, handleRemove, handleCancel, handleAdd}) =>{
                                 <button onClick={()=>handleCancel()} className=' my-2 border border-black p-1'>Cancel</button>
                                 <button onClick={()=>handleAdd()} className=' bg-black p-1 text-white font-bold text-sm'>Ajouter</button>
                             </div>
-                            </>
+                            </div>
                         )
                     })}
         </OverlayUI>
@@ -97,7 +97,7 @@ const DomainUI = ({message, category, content, file, handleRemove, handleAdd, ha
             {file && <FileUI file={file} handleAdd={handleAdd} handleCancel={handleCancel} handleRemove={handleRemove} />}
             {show && <ShowUI show={show} replace={replace} handleConfirm={handleConfirm} handleReplace={handleReplace}/>}
             <div className=' grid grid-cols-3 gap-3'>
-                {content.filter(elt => elt.category === category).map((elt) => <CardUI link={elt.link} handleShow={handleShow}/>)}
+                {content.filter(elt => elt.category === category).map((elt, indx) => <CardUI key={indx} link={elt.link} handleShow={handleShow}/>)}
             </div>
             </>
         )
